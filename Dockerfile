@@ -1,6 +1,6 @@
 FROM alpine:latest
 LABEL maintainer="horologger <horologger@protonmail.com>"
-FROM horologger/gotty:v1.5.0
+FROM horologger/gotty:v1.5.1
 
 RUN apk update && \
     apk upgrade && \
@@ -13,11 +13,11 @@ RUN apk update && \
 RUN echo 'echo ""' > /root/.bashrc && \
     echo 'echo "Nothing is started in the background(yet)."' >> /root/.bashrc && \
     echo 'echo "Run htop command to display system info."' >> /root/.bashrc && \
-    echo 'echo "Other commands: jq, vim, lsof, lncli"' >> /root/.bashrc && \
+    echo 'echo "Other commands: jq, vim, lsof, bitcoin-cli"' >> /root/.bashrc && \
     echo 'echo "Files are persisted in the /data folder, /data/bin for execs. Run this."' >> /root/.bashrc && \
     echo 'echo ""' >> /root/.bashrc  && \
 #    echo "export PS1='\h:\w\$ '" >> /root/.bashrc
-    echo "export PS1='lndsh:\w\$ '" >> /root/.bashrc
+    echo "export PS1='btcsh:\w\$ '" >> /root/.bashrc
 
 #RUN mkdir -p /data/bin
 

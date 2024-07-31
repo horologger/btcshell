@@ -34,9 +34,10 @@ echo GOTTY_CREDS = $GOTTY_CREDS
 LNDFN="lnd-$FNOS-$FNARCH-$FNVER.tar.gz"
 echo "Getting: "$LNDFN
 
-wget -O /tmp/lnd.tar.gz https://github.com/lightningnetwork/lnd/releases/download/$FNVER/$LNDFN
-tar xzf /tmp/lnd.tar.gz -C /tmp
-cp /tmp/lnd-$FNOS-$FNARCH-$FNVER/lncli /usr/local/bin
+
+#wget -O /tmp/lnd.tar.gz https://github.com/lightningnetwork/lnd/releases/download/$FNVER/$LNDFN
+#tar xzf /tmp/lnd.tar.gz -C /tmp
+#cp /tmp/lnd-$FNOS-$FNARCH-$FNVER/BTCCLI /usr/local/bin
 
 mkdir -p /data/bin
 echo 'export PATH=/data/bin:$PATH' >> /root/.bashrc
