@@ -1,6 +1,6 @@
 FROM alpine:latest
 LABEL maintainer="horologger <horologger@protonmail.com>"
-FROM horologger/gotty:v1.5.1
+FROM horologger/gotty:v1.5.2
 
 RUN apk update && \
     apk upgrade && \

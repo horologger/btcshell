@@ -5,25 +5,29 @@ docker buildx create --use
 
 # Build for local testing
 ```
-docker buildx build --platform linux/arm64 --tag horologger/btcshell:v0.0.1 --load .
+docker buildx build --platform linux/arm64 --tag horologger/btcshell:v0.0.2 --load .
 ```
 
 # Build and push to docker hub (So we can install on Umbrel)
 ```
-docker buildx build --platform linux/arm64,linux/amd64 --tag horologger/btcshell:v0.0.1 --output "type=registry" .
+docker buildx build --platform linux/arm64,linux/amd64 --tag horologger/btcshell:v0.0.2 --output "type=registry" .
 ```
 
 #First run on Zilla
 ```
 docker run \
 -e GOTTY_PORT=8080 \
+-e APP_USER=admin \
 -e APP_PASSWORD=Whatever8 \
--e BTCCLI_RPCSERVER=ragnar:10009 \
+-e BTC_RPC_HOST=ragnar \
+-e BTC_RPC_PORT=10009 \
+-e BTC_RPC_USER=x \
+-e BTC_RPC_PASSWORD=x \
 -v data:/data \
 --mount type=bind,source="$(pwd)"/data,target=/data,readonly \
 -p 8080:8080 \
 --name btcshell \
--it horologger/btcshell:v0.0.1
+-it horologger/btcshell:v0.0.2
 ```
 #Subsequent runs on Zilla
 ```
@@ -34,7 +38,7 @@ docker run \
 -v data:/data \
 --mount type=bind,source="$(pwd)"/data,target=/data,readonly \
 -p 8080:8080 \
--it horologger/btcshell:v0.0.1
+-it horologger/btcshell:v0.0.2
 ```
 
 # Inspect
