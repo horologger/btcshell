@@ -11,43 +11,66 @@ else
   FNOS="darwin"
 fi
 
-DAARCH=$(uname -p | tr '[:upper:]' '[:lower:]')
+DAARCH=$(uname -m | tr '[:upper:]' '[:lower:]')
 # echo $DAARCH
 if [ "$DAARCH" == "x86_64" ]; then
   echo "Running on x86_64"
   FNARCH="amd64"
+  FNSUFFIX="gnu"
+elif [ "$DAARCH" == "aarch64" ]; then
+  echo "Running on aarch64"
+  FNARCH="aarch64"
+  FNSUFFIX="gnu"
 else
-  echo "Running on ARM"
-  FNARCH="arm64"
+  echo "Running on Raspberry???"
+  FNARCH="arm"
+  FNSUFFIX="gnueabihf"
 fi
 # echo $FNOS
 # echo $FNARCH
 
-export BTC_RPC_HOST="bitcoind-testnet.embassy"
-export BTC_RPC_PORT=8332
-
+echo "GOTTY_PORT:" $GOTTY_PORT
+echo "APP_USER:" $APP_USER
+echo "APP_PASSWORD:" $APP_PASSWORD
 echo "BTC_RPC_HOST:" $BTC_RPC_HOST
 echo "BTC_RPC_PORT:" $BTC_RPC_PORT
+echo "BTC_RPC_USER:" $BTC_RPC_USER
+echo "BTC_RPC_PASSWORD:" $BTC_RPC_PASSWORD
 
-FNVER="27.1"
+
+# export BTC_RPC_HOST="bitcoind-testnet.embassy"
+# export BTC_RPC_PORT=8332
+
+# echo "BTC_RPC_HOST:" $BTC_RPC_HOST
+# echo "BTC_RPC_PORT:" $BTC_RPC_PORT
+
+FNVER="28.0"
 
 BTCFN="bitcoin-$FNVER-$FNARCH-linux-$FNSUFFIX.tar.gz"
-echo "Getting: "$BTCFN
+BTCURL="https://bitcoincore.org/bin/bitcoin-core-$FNVER/$BTCFN"
+echo "Got: "$BTCURL
 
 #https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1-x86_64-linux-gnu.tar.gz
 #https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1-arm-linux-gnueabihf.tar.gz
 
-wget -O /tmp/bitcoin.tar.gz https://bitcoincore.org/bin/bitcoin-core-$FNVER/$BTCFN
-tar xzf /tmp/bitcoin.tar.gz -C /tmp
-cp /tmp/bitcoin-$FNVER/bin/bitcoin-cli /usr/local/bin
+# This is now done in the build phase not the container run phase
+# wget -O /tmp/bitcoin.tar.gz $BTCURL
+# tar xzf /tmp/bitcoin.tar.gz -C /tmp
+# cp /tmp/bitcoin-$FNVER/bin/bitcoin-cli /usr/local/bin
 
 mkdir -p /data/bin
 echo 'export PATH=/data/bin:$PATH' >> /root/.bashrc
 
-export APP_USER=$(yq e ".user" /data/start9/config.yaml)
-export APP_PASSWORD=$(yq e ".password" /data/start9/config.yaml)
-export BTC_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
-export BTC_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
+# if [ -n "${VARIABLE_NAME}" ]; then
+#     echo "VARIABLE_NAME is set"
+# else
+#     echo "VARIABLE_NAME is unset or empty"
+# fi
+
+# export APP_USER=$(yq e ".user" /data/start9/config.yaml)
+# export APP_PASSWORD=$(yq e ".password" /data/start9/config.yaml)
+# export BTC_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
+# export BTC_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
 
 echo APP_USER = $APP_USER
 echo APP_PASSWORD = $APP_PASSWORD
