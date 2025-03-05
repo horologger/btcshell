@@ -82,10 +82,4 @@ echo GOTTY_CREDS = $GOTTY_CREDS
 mkdir -p /data/bin
 echo 'export PATH=/data/bin:$PATH' >> /root/.bashrc
 
-mkdir -p ~/.bitcoin
-echo 'rpcuser='$BITCOIN_RPCUSER > ~/.bitcoin/bitcoin.conf
-echo 'rpcpassword='$BITCOIN_RPCPASSWORD >> ~/.bitcoin/bitcoin.conf
-echo 'rpcconnect='$BITCOIN_RPCCONNECT >> ~/.bitcoin/bitcoin.conf
-echo 'rpcport='$BITCOIN_RPCPORT >> ~/.bitcoin/bitcoin.conf
-
 exec /usr/bin/gotty --port $GOTTY_PORT -c $GOTTY_CREDS --permit-write --reconnect /bin/bash

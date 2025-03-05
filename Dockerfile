@@ -31,7 +31,7 @@ RUN echo 'echo ""' > /root/.bashrc && \
     echo 'echo "Files are persisted in the /data folder, /data/bin for execs."' >> /root/.bashrc && \
     echo 'echo ""' >> /root/.bashrc  && \
     echo "export HOME='/root'" >> /root/.bashrc  && \
-    echo "alias bitcoin-cli='bitcoin-cli -rpcconnect=$BITCOIN_RPCCONNECT -rpcport=$BITCOIN_RPCPORT -rpcuser=$BITCOIN_RPCUSER -rpcpassword=$BITCOIN_RPCPASSWORD'" >> /root/.bashrc && \
+    echo "/usr/bin/build_bitcoin_conf.sh" >> /root/.bashrc && \
 #    echo "export PS1='\h:\w\$ '" >> /root/.bashrc
     echo "export PS1='btcsh:\w\$ '" >> /root/.bashrc
 
@@ -49,6 +49,10 @@ RUN chmod a+x /usr/bin/docker_entrypoint.sh
 COPY ./build_time_tasks.sh /usr/bin/build_time_tasks.sh
 RUN chmod a+x /usr/bin/build_time_tasks.sh
 RUN /bin/bash /usr/bin/build_time_tasks.sh
+
+COPY ./build_bitcoin_conf.sh /usr/bin/build_bitcoin_conf.sh
+RUN chmod a+x /usr/bin/build_bitcoin_conf.sh
+RUN /bin/bash /usr/bin/build_bitcoin_conf.sh
 
 USER 0
 
