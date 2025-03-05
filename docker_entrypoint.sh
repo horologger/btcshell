@@ -32,19 +32,19 @@ fi
 echo "GOTTY_PORT:" $GOTTY_PORT
 echo "APP_USER:" $APP_USER
 echo "APP_PASSWORD:" $APP_PASSWORD
-echo "BTC_RPC_HOST:" $BTC_RPC_HOST
-echo "BTC_RPC_PORT:" $BTC_RPC_PORT
-echo "BTC_RPC_USER:" $BTC_RPC_USER
-echo "BTC_RPC_PASSWORD:" $BTC_RPC_PASSWORD
+echo "BITCOIN_RPCCONNECT:" $BITCOIN_RPCCONNECT
+echo "BITCOIN_RPCPORT:" $BITCOIN_RPCPORT
+echo "BITCOIN_RPCUSER:" $BITCOIN_RPCUSER
+echo "BITCOIN_RPCPASSWORD:" $BITCOIN_RPCPASSWORD
 
 
-# export BTC_RPC_HOST="bitcoind-testnet.embassy"
-# export BTC_RPC_PORT=8332
+# export BITCOIN_RPCCONNECT="bitcoind-testnet.embassy"
+# export BITCOIN_RPCPORT=8332
 
-# echo "BTC_RPC_HOST:" $BTC_RPC_HOST
-# echo "BTC_RPC_PORT:" $BTC_RPC_PORT
+# echo "BITCOIN_RPCCONNECT:" $BITCOIN_RPCCONNECT
+# echo "BITCOIN_RPCPORT:" $BITCOIN_RPCPORT
 
-FNVER="28.0"
+FNVER="28.1"
 
 BTCFN="bitcoin-$FNVER-$FNARCH-linux-$FNSUFFIX.tar.gz"
 BTCURL="https://bitcoincore.org/bin/bitcoin-core-$FNVER/$BTCFN"
@@ -69,8 +69,8 @@ echo 'export PATH=/data/bin:$PATH' >> /root/.bashrc
 
 # export APP_USER=$(yq e ".user" /data/start9/config.yaml)
 # export APP_PASSWORD=$(yq e ".password" /data/start9/config.yaml)
-# export BTC_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
-# export BTC_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
+# export BITCOIN_RPCUSER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
+# export BITCOIN_RPCPASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
 
 echo APP_USER = $APP_USER
 echo APP_PASSWORD = $APP_PASSWORD
@@ -83,9 +83,9 @@ mkdir -p /data/bin
 echo 'export PATH=/data/bin:$PATH' >> /root/.bashrc
 
 mkdir -p ~/.bitcoin
-echo 'rpcuser='$BTC_RPC_USER > ~/.bitcoin/bitcoin.conf
-echo 'rpcpassword='$BTC_RPC_PASSWORD >> ~/.bitcoin/bitcoin.conf
-echo 'rpcconnect='$BTC_RPC_HOST >> ~/.bitcoin/bitcoin.conf
-echo 'rpcport='$BTC_RPC_PORT >> ~/.bitcoin/bitcoin.conf
+echo 'rpcuser='$BITCOIN_RPCUSER > ~/.bitcoin/bitcoin.conf
+echo 'rpcpassword='$BITCOIN_RPCPASSWORD >> ~/.bitcoin/bitcoin.conf
+echo 'rpcconnect='$BITCOIN_RPCCONNECT >> ~/.bitcoin/bitcoin.conf
+echo 'rpcport='$BITCOIN_RPCPORT >> ~/.bitcoin/bitcoin.conf
 
 exec /usr/bin/gotty --port $GOTTY_PORT -c $GOTTY_CREDS --permit-write --reconnect /bin/bash

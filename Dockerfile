@@ -10,7 +10,7 @@ ARG TARGETVARIANT
 RUN echo "BTC Shell Build Starting...$TARGETPLATFORM"
 RUN echo "$TARGETOS : $TARGETARCH : $TARGETVARIANT"
 
-RUN apk add --no-cache yq; \
+RUN apk add --no-cache yq jq libgcc gcompat; \
     rm -f /var/cache/apk/*
 
 # RUN apk update && \
@@ -30,6 +30,8 @@ RUN echo 'echo ""' > /root/.bashrc && \
     echo 'echo "Other commands: jq, vim, lsof, bitcoin-cli -getinfo"' >> /root/.bashrc && \
     echo 'echo "Files are persisted in the /data folder, /data/bin for execs."' >> /root/.bashrc && \
     echo 'echo ""' >> /root/.bashrc  && \
+    echo "export HOME='/root'" >> /root/.bashrc  && \
+    echo "alias bitcoin-cli='bitcoin-cli -rpcconnect=$BITCOIN_RPCCONNECT -rpcport=$BITCOIN_RPCPORT -rpcuser=$BITCOIN_RPCUSER -rpcpassword=$BITCOIN_RPCPASSWORD'" >> /root/.bashrc && \
 #    echo "export PS1='\h:\w\$ '" >> /root/.bashrc
     echo "export PS1='btcsh:\w\$ '" >> /root/.bashrc
 

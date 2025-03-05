@@ -29,18 +29,20 @@ else
   FNSUFFIX="gnueabihf"
 fi
 
-FNVER="28.0"
+FNVER="28.1"
 
 BTCFN="bitcoin-$FNVER-$FNARCH-linux-$FNSUFFIX.tar.gz"
 BTCURL="https://bitcoincore.org/bin/bitcoin-core-$FNVER/$BTCFN"
 echo "Getting: "$BTCURL
 
-#https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1-x86_64-linux-gnu.tar.gz
+#https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-28.1-x86_64-linux-gnu.tar.gz
 #https://bitcoincore.org/bin/bitcoin-core-27.1/bitcoin-27.1-arm-linux-gnueabihf.tar.gz
 
 wget -O /tmp/bitcoin.tar.gz $BTCURL
 tar xzf /tmp/bitcoin.tar.gz -C /tmp
 cp /tmp/bitcoin-$FNVER/bin/bitcoin-cli /usr/local/bin
+rm -rf /tmp/bitcoin-$FNVER
+rm -f /tmp/bitcoin.tar.gz
 
 echo "End Build Time Tasks..."
 sleep 3
